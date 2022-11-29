@@ -22,11 +22,11 @@ jobs:
         ls
     - name: test with pytest
       run: |
-        pytest test.py -v -cov
+        pytest test.py -v -cov --junitxml=report.xml
         
-    - name: Create an issue
+    # Create an issue
     - if: ${{ failure() }}
-      uses: JasonEtco/create-an-issue@v2.8.0
+    - uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
