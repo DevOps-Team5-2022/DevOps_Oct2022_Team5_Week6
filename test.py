@@ -11,4 +11,4 @@ def test_longString():
 
 def test_emptyString():
   result3 = helloworld("")
-  assert result3 == "Input string is empty!"
+  assert result3 == "Input string is empty
