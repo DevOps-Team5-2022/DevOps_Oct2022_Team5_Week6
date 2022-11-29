@@ -1,7 +1,9 @@
+
 name: CI for Hello World
 
 on:
   push:
+    #branches: [main]
     
 jobs:
   build:
@@ -23,11 +25,15 @@ jobs:
     - name: test with pytest
       run: |
         pytest test.py -v -cov --junitxml=report.xml
-        
-    # Create an issue
     - if: ${{ failure() }}
-    - uses: JasonEtco/create-an-issue@v2
+      uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        filename: .github/bug-template.md
+        filename: .github/ISSUE_TEMPLATE.md
+  
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        junit_files: "report.xml"
